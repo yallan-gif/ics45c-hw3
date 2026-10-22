@@ -12,6 +12,13 @@ String::String(const String &s) {
 String::~String() {
 }
 
+String &String::operator=(const String &s) {
+    if (this != &s) {
+        strcpy(buf, s.buf);
+    }
+    return *this;
+}
+
 String &String::operator+=(const String &s) {
     if (this == &s) {
         String copy(s);
