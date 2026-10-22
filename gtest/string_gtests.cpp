@@ -53,3 +53,24 @@ TEST(StringClass, Assignment) {
     EXPECT_EQ(s, String());
     EXPECT_EQ(s.size(), 0);
 }
+TEST(StringClass, CapacityBoundary) {
+    char full[MAXLEN];
+
+    for (int i = 0; i < MAXLEN - 1; ++i)
+        full[i] = 'a';
+    full[MAXLEN - 1] = '\0';
+
+    String s(full);
+    EXPECT_EQ(s.size(), MAXLEN - 1);
+
+    s += String("b");
+    EXPECT_EQ(s.size(), MAXLEN - 1);
+
+    String t("abc");
+    t += String("def");
+    EXPECT_EQ(t.size(), 6);
+
+    String u("hi");
+    u += u;
+    EXPECT_EQ(u.size(), 4);
+}
