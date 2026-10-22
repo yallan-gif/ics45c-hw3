@@ -12,9 +12,19 @@ String::String(const String &s) {
 String::~String() {
 }
 
-String &String::operator=(const String &s) {
-    if (this != &s)
-        strcpy(buf, s.buf);
+String &String::operator+=(const String &s) {
+    if (this == &s) {
+        String copy(s);
+        return *this += copy;
+    }
+
+    int len = size();
+    int remaining = MAXLEN - 1 - len;
+
+    if (s.size() > remaining)
+        std::cerr << "ERROR: String Capacity Exceeded\n";
+
+    strncat(buf, s.buf, remaining);
     return *this;
 }
 
@@ -172,16 +182,6 @@ String String::operator+(const String &s) const {
     return result;
 }
 
-String &String::operator+=(const String &s) {
-    int len = size();
-    int remaining = MAXLEN - 1 - len;
-
-    if (s.size() > remaining)
-        std::cerr << "ERROR: String Capacity Exceeded\n";
-
-    strncat(buf, s.buf, remaining);
-    return *this;
-}
 
 void String::print(std::ostream &out) const {
     out << buf;
