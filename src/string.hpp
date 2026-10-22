@@ -3,9 +3,10 @@
 
 #include <iosfwd>
 
+constexpr int MAXLEN = 1024;
+
 class String {
 public:
-    static constexpr int MAXLEN = 1024;
 
 private:
     char buf[MAXLEN];
@@ -19,13 +20,15 @@ public:
 
     char &operator[](int index);
     int size() const;
-    bool in_bounds(int index) const;
+    bool in_bounds(int index) const {
+    return index >= 0 && index < strlen(buf);
+	}
 
     String reverse() const;
     int indexOf(char c) const;
     int indexOf(const String &s) const;
 
-    bool operator==(const String &s) const;
+	bool operator==(const String &s) const;
     bool operator!=(const String &s) const;
     bool operator<(const String &s) const;
     bool operator>(const String &s) const;
@@ -45,7 +48,7 @@ public:
     static char *strncat(char *dest, const char *src, int n);
     static int strcmp(const char *s1, const char *s2);
     static int strncmp(const char *s1, const char *s2, int n);
-    static char *reverse_cpy(char *dest, const char *src);
+    static void reverse_cpy(char *dest, const char *src);
     static const char *strchr(const char *s, char c);
     static const char *strstr(const char *haystack, const char *needle);
 };
